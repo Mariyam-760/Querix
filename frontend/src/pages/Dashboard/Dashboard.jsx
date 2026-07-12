@@ -1,56 +1,97 @@
+import {
+  DollarSign,
+  ShoppingCart,
+  Users,
+  Bot,
+} from "lucide-react";
+
+import StatCard from "../../components/dashboard/StatCard";
+import AIWorkspace from "../../components/dashboard/AIWorkspace";
+import SQLPreview from "../../components/dashboard/SQLPreview";
+import ResultsTable from "../../components/dashboard/ResultsTable";
+import BusinessCharts from "../../components/dashboard/BusinessCharts";
+import AIInsights from "../../components/dashboard/AIInsights";
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-slate-100 p-8">
+    <div>
 
       {/* Header */}
 
       <div className="mb-10">
 
-        <h1 className="text-4xl font-bold text-slate-900">
-          Dashboard
-        </h1>
+  <h1 className="text-4xl font-bold text-slate-800">
+    Welcome Back 👋
+  </h1>
 
-        <p className="mt-2 text-lg text-slate-600">
-          Welcome to Querix — Your AI-Powered Business Intelligence Platform.
-        </p>
+  <p className="mt-2 text-slate-500">
+    Here's what's happening in your business today.
+  </p>
 
-      </div>
+</div>
 
-      {/* Welcome Card */}
+<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-      <div className="rounded-3xl bg-white p-8 shadow-lg border border-slate-200">
+  <StatCard
+    title="Revenue"
+    value="₹12.5L"
+    icon={DollarSign}
+    color="bg-blue-600"
+    change="+12%"
+  />
 
-        <h2 className="text-2xl font-semibold text-slate-800">
-          🚀 Welcome to Querix
-        </h2>
+  <StatCard
+    title="Orders"
+    value="2,485"
+    icon={ShoppingCart}
+    color="bg-green-600"
+    change="+8%"
+  />
 
-        <p className="mt-4 leading-8 text-slate-600">
-          This dashboard will soon allow you to:
-        </p>
+  <StatCard
+    title="Customers"
+    value="1,326"
+    icon={Users}
+    color="bg-purple-600"
+    change="+18%"
+  />
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+  <StatCard
+    title="AI Queries"
+    value="94"
+    icon={Bot}
+    color="bg-orange-500"
+    change="+42%"
+  />
 
-          <div className="rounded-2xl border border-slate-200 p-5">
-            🤖 Ask business questions in plain English
-          </div>
+</div>
+ <div className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-          <div className="rounded-2xl border border-slate-200 p-5">
-            🧠 Generate SQL using AI
-          </div>
+    <AIWorkspace />
 
-          <div className="rounded-2xl border border-slate-200 p-5">
-            📊 Visualize data using interactive charts
-          </div>
+    <SQLPreview />
 
-          <div className="rounded-2xl border border-slate-200 p-5">
-            💡 Receive AI-powered business insights
-          </div>
+  </div>
+   {/* Results Table */}
 
-        </div>
+  <div className="mt-8">
+    <ResultsTable />
+  </div>
 
-      </div>
+  {/* Business Charts */}
 
-    </div>
+  <div className="mt-8">
+    <BusinessCharts />
+  </div>
+  
+  <div className="mt-8">
+  <AIInsights />
+</div>
+</div>
+
+
+
+
+  
   );
 };
 
