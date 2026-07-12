@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthLayout from "../../layouts/AuthLayout";
+import BrandingPanel from "../../components/auth/BrandingPanel";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,146 +11,108 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log({
-      email,
-      password,
-    });
-
-    // Backend authentication will be added later.
+    console.log({ email, password });
   };
 
   return (
     <AuthLayout>
       <div className="min-h-screen flex">
-        {/* Left Branding Section */}
-        <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white items-center justify-center p-16">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold mb-6">
-              Querix
-            </h1>
+        {/* Left Panel */}
+       <BrandingPanel />
 
-            <p className="text-xl leading-8 text-blue-100">
-              AI-Powered Natural Language to SQL Business Analytics Platform
-            </p>
-
-            <div className="mt-12 space-y-5 text-lg">
-              <p>✔ Convert Natural Language into SQL</p>
-              <p>✔ Visualize Business Data Instantly</p>
-              <p>✔ AI Generated Business Insights</p>
-              <p>✔ Download Reports (PDF / Excel / CSV)</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Login Section */}
-        <div className="flex w-full lg:w-1/2 items-center justify-center bg-slate-50 p-8">
-          <div className="w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl">
-
-            <h2 className="text-3xl font-bold text-slate-800">
-              Welcome Back 👋
+        {/* Right Panel */}
+        <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 px-8 py-12">
+          <div className="w-full max-w-lg rounded-[32px] border border-white/70 bg-white/90 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-10">
+            <h2 className="text-3xl font-bold text-slate-900">
+              Welcome Back!
             </h2>
 
             <p className="mt-2 text-slate-500">
-              Sign in to continue to Querix
+              Access your AI-powered business analytics workspace.
             </p>
 
-            <form
-              className="mt-8"
-              onSubmit={handleSubmit}
-            >
-              {/* Email */}
-
+            <form onSubmit={handleSubmit} className="mt-8">
               <div className="mb-5">
-                <label className="mb-2 block text-sm font-medium text-slate-700">
+                <label className="block text-sm font-medium mb-2">
                   Email Address
                 </label>
 
                 <input
                   type="email"
-                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition-all duration-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                  placeholder="you@company.com"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none transition-all duration-300 hover:border-blue-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                 />
               </div>
 
-              {/* Password */}
-
               <div className="mb-5">
-                <label className="mb-2 block text-sm font-medium text-slate-700">
+                <label className="block text-sm font-medium mb-2">
                   Password
                 </label>
 
                 <div className="relative">
-
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none transition-all duration-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                    placeholder="Enter your password"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 pr-12 outline-none transition-all duration-300 hover:border-blue-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                   />
 
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
                   >
-                    {showPassword ? (
-                      <FiEyeOff size={20} />
-                    ) : (
-                      <FiEye size={20} />
-                    )}
+                    {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                   </button>
-
                 </div>
               </div>
 
-              {/* Remember Me */}
-
-              <div className="mb-6 flex items-center justify-between">
-
-                <label className="flex items-center gap-2 text-sm text-slate-600">
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 rounded"
-                  />
+              <div className="mb-6 flex items-center justify-between text-sm">
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" />
                   Remember Me
                 </label>
 
                 <button
                   type="button"
-                  className="text-sm font-medium text-blue-600 hover:underline"
+                  className="text-blue-600 hover:underline"
                 >
                   Forgot Password?
                 </button>
-
               </div>
-
-              {/* Login Button */}
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-700 hover:shadow-lg"
+                className="w-full rounded-xl bg-gradient-to-r from-[#4A5FE7] to-[#5C72F2] py-2.5 text-white font-semibold shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                Sign In
+                Sign In →
               </button>
-
             </form>
 
-            {/* Register */}
+            <div className="my-8 flex items-center">
+              <div className="flex-1 border-t"></div>
+              <span className="px-4 text-sm text-slate-400">OR</span>
+              <div className="flex-1 border-t"></div>
+            </div>
+
+            <button
+              className="w-full rounded-xl border border-slate-300 bg-white py-2.5 font-medium transition-all duration-300 hover:border-blue-300 hover:bg-blue-50"
+            >
+              Continue with Google
+            </button>
 
             <p className="mt-8 text-center text-sm text-slate-500">
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="font-semibold text-blue-600 hover:underline"
+                className="font-semibold text-[#4A5FE7] hover:underline"
               >
                 Create Account
               </Link>
             </p>
-
           </div>
         </div>
       </div>

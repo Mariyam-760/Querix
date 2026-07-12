@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthLayout from "../../layouts/AuthLayout";
+import BrandingPanel from "../../components/auth/BrandingPanel";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,50 +32,29 @@ const Register = () => {
   return (
     <AuthLayout>
       <div className="min-h-screen flex">
+        <BrandingPanel />
 
-        {/* Left Section */}
+        {/* Right Panel */}
 
-        <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white items-center justify-center p-16">
+        <div className="w-full lg:w-[55%] flex items-center justify-center bg-slate-50 px-6 py-10">
+          <div className="w-full max-w-md rounded-3xl bg-white border border-slate-200 shadow-2xl p-10">
 
-          <div className="max-w-md">
-
-            <h1 className="text-5xl font-bold mb-6">
-              Join Querix
-            </h1>
-
-            <p className="text-xl leading-8 text-blue-100">
-              Build smarter business decisions using AI-powered analytics.
-            </p>
-
-            <div className="mt-12 space-y-5 text-lg">
-              <p>✔ Natural Language to SQL</p>
-              <p>✔ Interactive Dashboards</p>
-              <p>✔ AI Business Insights</p>
-              <p>✔ Download Reports</p>
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* Right Section */}
-
-        <div className="flex w-full lg:w-1/2 items-center justify-center bg-slate-50 p-8">
-
-          <div className="w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl">
-
-            <h2 className="text-3xl font-bold text-slate-800">
-              Create Account
+            <h2 className="text-3xl font-bold text-slate-900">
+              Create Account 🚀
             </h2>
 
             <p className="mt-2 text-slate-500">
-              Create your Querix account
+              Create your Querix account to start analyzing business data.
             </p>
 
-            <form className="mt-8" onSubmit={handleSubmit}>
+            <form
+              className="mt-8"
+              onSubmit={handleSubmit}
+            >
+              {/* Full Name */}
 
               <div className="mb-5">
-                <label className="block mb-2 text-sm font-medium">
+                <label className="block text-sm font-medium mb-2">
                   Full Name
                 </label>
 
@@ -83,14 +63,16 @@ const Register = () => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  placeholder="Enter your full name"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                  placeholder="John Doe"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
                 />
               </div>
 
+              {/* Email */}
+
               <div className="mb-5">
-                <label className="block mb-2 text-sm font-medium">
-                  Email
+                <label className="block text-sm font-medium mb-2">
+                  Email Address
                 </label>
 
                 <input
@@ -98,31 +80,32 @@ const Register = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Enter your email"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                  placeholder="you@company.com"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
                 />
               </div>
 
+              {/* Password */}
+
               <div className="mb-5">
-                <label className="block mb-2 text-sm font-medium">
+                <label className="block text-sm font-medium mb-2">
                   Password
                 </label>
 
                 <div className="relative">
-
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Create password"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
                   />
 
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
                   >
                     {showPassword ? (
                       <FiEyeOff size={20} />
@@ -130,12 +113,13 @@ const Register = () => {
                       <FiEye size={20} />
                     )}
                   </button>
-
                 </div>
               </div>
 
+              {/* Confirm Password */}
+
               <div className="mb-6">
-                <label className="block mb-2 text-sm font-medium">
+                <label className="block text-sm font-medium mb-2">
                   Confirm Password
                 </label>
 
@@ -145,33 +129,42 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Confirm password"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 transition"
+                className="w-full rounded-xl bg-[#4A5FE7] py-3 text-white font-semibold hover:bg-[#3d50d6] transition"
               >
-                Create Account
+                Create Account →
               </button>
-
             </form>
+
+            <div className="my-8 flex items-center">
+              <div className="flex-1 border-t"></div>
+              <span className="px-4 text-sm text-slate-400">
+                OR
+              </span>
+              <div className="flex-1 border-t"></div>
+            </div>
+
+            <button className="w-full rounded-xl border border-slate-300 py-3 hover:bg-slate-100 transition">
+              Continue with Google
+            </button>
 
             <p className="mt-8 text-center text-sm text-slate-500">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="font-semibold text-blue-600 hover:underline"
+                className="font-semibold text-[#4A5FE7] hover:underline"
               >
                 Sign In
               </Link>
             </p>
 
           </div>
-
         </div>
-
       </div>
     </AuthLayout>
   );
