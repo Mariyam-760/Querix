@@ -9,8 +9,20 @@ import {
   LogOut,
 } from "lucide-react";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard" },
+import { useNavigate } from "react-router-dom";
+
+  const menuItems = [
+  {
+    icon: LayoutDashboard,
+    label: "Dashboard",
+    path: "/dashboard",
+  },
+  {
+    icon: Database,
+    label: "Database",
+    path: "/database",
+  },
+ { icon: LayoutDashboard, label: "Dashboard" },
   { icon: Database, label: "Database" },
   { icon: MessageSquare, label: "AI Chat" },
   { icon: BarChart3, label: "Analytics" },
@@ -19,7 +31,17 @@ const menuItems = [
   { icon: Settings, label: "Settings" },
 ];
 
+
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    navigate("/login", { replace: true });
+  };
+
   return (
     <aside className="h-screen w-72 bg-[#111827] text-white flex flex-col">
 
@@ -47,27 +69,28 @@ const Sidebar = () => {
           return (
             <button
               key={item.label}
+              onClick={() => navigate(item.path)}
               className="mb-2 flex w-full items-center gap-4 rounded-xl px-4 py-3 text-left transition hover:bg-slate-800"
             >
-              <Icon size={20} />
-
-              <span>{item.label}</span>
+            <Icon size={20} />
+            <span>{item.label}</span>
             </button>
           );
         })}
 
       </nav>
 
-      {/* Footer */}
+      {/* Logout */}
 
       <div className="border-t border-slate-700 p-4">
 
-        <button className="flex w-full items-center gap-4 rounded-xl px-4 py-3 transition hover:bg-red-500">
-
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-4 rounded-xl px-4 py-3 transition hover:bg-red-500"
+        >
           <LogOut size={20} />
 
           Logout
-
         </button>
 
       </div>
