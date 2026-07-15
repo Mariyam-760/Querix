@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String
 
 from app.core.database import Base
 
+from sqlalchemy import Column, Integer, String, Boolean
 
 class DatabaseConnection(Base):
     __tablename__ = "database_connections"
@@ -19,3 +20,5 @@ class DatabaseConnection(Base):
     password = Column(String(255), nullable=False)
 
     database_name = Column(String(100), nullable=False)
+
+    is_active = Column(Boolean, default=False)
