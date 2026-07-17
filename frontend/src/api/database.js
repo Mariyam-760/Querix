@@ -1,8 +1,4 @@
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
-});
+import API from "./api";
 
 export const testConnection = (data) =>
   API.post("/database/test", data);
@@ -16,12 +12,8 @@ export const getConnections = () =>
 export const deleteConnection = (id) =>
   API.delete(`/connections/${id}`);
 
-export const activateConnection = (id) => {
-  return API.put(
-    `/connections/activate/${id}`
-  );
-};
+export const activateConnection = (id) =>
+  API.put(`/connections/activate/${id}`);
 
-export const updateConnection = (id, data) => {
-  return API.put(`/connections/${id}`, data);
-};
+export const updateConnection = (id, data) =>
+  API.put(`/connections/${id}`, data);

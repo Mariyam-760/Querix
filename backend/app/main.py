@@ -9,6 +9,8 @@ from app.models.database_connection import DatabaseConnection
 from app.models.user import User
 from app.routers.auth import router as auth_router
 
+from app.routers.ai import router as ai_router
+
 app = FastAPI(
     title="Querix API",
     description="AI-Powered Natural Language to SQL Business Intelligence Platform",
@@ -31,7 +33,7 @@ app.include_router(database_router)
 app.include_router(schema_router)
 app.include_router(connections_router)
 app.include_router(auth_router)
-
+app.include_router(ai_router)
 
 @app.get("/")
 def root():

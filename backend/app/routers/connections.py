@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.core.database import get_db
+from app.core.security import get_current_user
+
 from app.models.database_connection import DatabaseConnection
 from app.schemas.connection import ConnectionResponse
 
@@ -21,15 +23,18 @@ class ConnectionCreate(BaseModel):
     database_name: str
 
 
-# ----------------------------
+# ======================================================
 # Create Connection
-# ----------------------------
+# ======================================================
+
 @router.post("/")
 def create_connection(
     connection: ConnectionCreate,
     db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
 ):
     db_connection = DatabaseConnection(
+        user_id=current_user["user_id"],
         connection_name=connection.connection_name,
         host=connection.host,
         port=connection.port,
@@ -50,35 +55,45 @@ def create_connection(
     }
 
 
-# ----------------------------
-# Get All Connections
-# ----------------------------
+# ======================================================
+# Get User Connections
+# ======================================================
+
 @router.get(
     "/",
     response_model=list[ConnectionResponse],
 )
 def get_connections(
     db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
 ):
     connections = (
         db.query(DatabaseConnection)
+        .filter(
+            DatabaseConnection.user_id == current_user["user_id"]
+        )
         .all()
     )
 
     return connections
 
 
-# ----------------------------
+# ======================================================
 # Delete Connection
-# ----------------------------
+# ======================================================
+
 @router.delete("/{connection_id}")
 def delete_connection(
     connection_id: int,
-    db: Session = Depends(get_db),
+    db: Session =Depends(get_db),
+    current_user=Depends(get_current_user),
 ):
     connection = (
         db.query(DatabaseConnection)
-        .filter(DatabaseConnection.id == connection_id)
+        .filter(
+            DatabaseConnection.id == connection_id,
+            DatabaseConnection.user_id == current_user["user_id"],
+        )
         .first()
     )
 
@@ -96,15 +111,23 @@ def delete_connection(
         "message": "Connection deleted successfully.",
     }
 
+
+# ======================================================
+# Activate Connection
+# ======================================================
+
 @router.put("/activate/{connection_id}")
 def activate_connection(
     connection_id: int,
     db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
 ):
-    # Find selected connection
     connection = (
         db.query(DatabaseConnection)
-        .filter(DatabaseConnection.id == connection_id)
+        .filter(
+            DatabaseConnection.id == connection_id,
+            DatabaseConnection.user_id == current_user["user_id"],
+        )
         .first()
     )
 
@@ -114,14 +137,18 @@ def activate_connection(
             detail="Connection not found.",
         )
 
-    # Deactivate all connections
-    db.query(DatabaseConnection).update(
-        {
-            DatabaseConnection.is_active: False
-        }
+    (
+        db.query(DatabaseConnection)
+        .filter(
+            DatabaseConnection.user_id == current_user["user_id"]
+        )
+        .update(
+            {
+                DatabaseConnection.is_active: False
+            }
+        )
     )
 
-    # Activate selected connection
     connection.is_active = True
 
     db.commit()
@@ -131,15 +158,24 @@ def activate_connection(
         "message": "Connection activated successfully.",
     }
 
+
+# ======================================================
+# Update Connection
+# ======================================================
+
 @router.put("/{connection_id}")
 def update_connection(
     connection_id: int,
     updated_connection: ConnectionCreate,
     db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
 ):
     connection = (
         db.query(DatabaseConnection)
-        .filter(DatabaseConnection.id == connection_id)
+        .filter(
+            DatabaseConnection.id == connection_id,
+            DatabaseConnection.user_id == current_user["user_id"],
+        )
         .first()
     )
 

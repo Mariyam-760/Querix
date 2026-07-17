@@ -1,13 +1,19 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 
 from app.core.database import Base
 
-from sqlalchemy import Column, Integer, String, Boolean
 
 class DatabaseConnection(Base):
     __tablename__ = "database_connections"
 
     id = Column(Integer, primary_key=True, index=True)
+
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False,
+    )
 
     connection_name = Column(String(100), nullable=False)
 
@@ -22,3 +28,8 @@ class DatabaseConnection(Base):
     database_name = Column(String(100), nullable=False)
 
     is_active = Column(Boolean, default=False)
+
+    user = relationship(
+        "User",
+        back_populates="connections",
+    )

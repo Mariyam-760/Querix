@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthLayout from "../../layouts/AuthLayout";
 import BrandingPanel from "../../components/auth/BrandingPanel";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../api/auth";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -13,6 +16,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+  
 
   const handleChange = (e) => {
     setFormData({
@@ -21,13 +25,31 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log(formData);
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
 
-    // Backend registration will be added later.
-  };
+  try {
+    const response = await registerUser({
+      full_name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    });
+
+    alert(response.data.message);
+
+    navigate("/login");
+  } catch (error) {
+    alert(
+      error.response?.data?.detail ||
+      "Registration failed."
+    );
+  }
+};
 
   return (
     <AuthLayout>
