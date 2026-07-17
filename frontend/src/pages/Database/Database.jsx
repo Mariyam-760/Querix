@@ -36,7 +36,7 @@ const [showForm, setShowForm] = useState(false);
   setForm((prev) => ({
     ...prev,
     [e.target.name]: e.target.value,
-  }));
+}));
 };
 
  const fetchConnections = useCallback(async () => {
@@ -178,7 +178,7 @@ const handleUpdateConnection = async () => {
 
 const handleEditConnection = (connection) => {
   setEditingId(connection.id);
-  setIsEditing(true);
+  setIsEditing(form);
   setShowForm(true);
 
   setForm({
@@ -217,6 +217,7 @@ const handleEditConnection = (connection) => {
     setShowForm(true);
     setIsEditing(false);
     setEditingId(null);
+    
 
     setForm({
       connection_name: "",
@@ -295,10 +296,12 @@ const handleEditConnection = (connection) => {
 
             {connections.map((connection) => (
 <ConnectionCard
+  key={connection.id}
   connection={connection}
   onDelete={handleDeleteConnection}
   onSelect={handleSelectConnection}
   onEdit={handleEditConnection}
+  
 />
 
 
